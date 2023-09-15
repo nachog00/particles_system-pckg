@@ -1,6 +1,6 @@
 const canvas = document.getElementById("canvas1");
 
-const ctx = canvas.getContext("2d" , { willReadFrequently: true });
+const ctx = canvas.getContext("2d", { willReadFrequently: true });
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -8,11 +8,11 @@ canvas.height = window.innerHeight;
 class Particle {
   constructor(effect, x, y, color) {
     this.effect = effect;
-    this.x = Math.random() * this.effect.canvasWidth;z
+    this.x = Math.random() * this.effect.canvasWidth;
     // this.y = Math.random() * this.effect.canvasHeight;
     this.y = 0;
     this.color = color;
-    this.size = this.effect.gap ;
+    this.size = this.effect.gap;
     this.originX = x;
     this.originY = y;
     this.size = this.effect.gap;
@@ -23,16 +23,27 @@ class Particle {
     this.force = 0;
     this.angle = 0;
     this.distance = 0;
-    this.friction = Math.random() * 0.05 + 0.94;
+    this.friction = Math.random() * 0.05 + 0.9;
     this.ease = Math.random() * 0.1 + 0.05;
   }
   draw() {
-    this.effect.context.fillStyle !== this.color ?? (this.effect.context.fillStyle = this.color); 
+    this.effect.context.fillStyle !== this.color ??
+      (this.effect.context.fillStyle = this.color);
     this.effect.context.fillRect(this.x, this.y, this.size, this.size);
   }
   update() {
-    this.x += (this.originX - this.x) * this.ease;
-    this.y += (this.originY - this.y) * this.ease
+    this.dx = this.effect.mouse.x - this.x;
+    this.dy = this.effect.mouse.y - this.y;
+    this.sq_dist = this.dx * this.dx + this.dy * this.dy;
+    this.force = -this.effect.mouse.radius / this.sq_dist ;
+    if (this.sq_dist < this.effect.mouse.radius ** 2) {
+      this.angle = Math.atan2(this.dy, this.dx);
+      this.vx += this.force * Math.cos(this.angle);
+      this.vy += this.force * Math.sin(this.angle);
+    }
+
+    this.x += (this.vx *= this.friction) + (this.originX - this.x) * this.ease;
+    this.y += (this.vy *= this.friction) + (this.originY - this.y) * this.ease;
   }
 }
 
@@ -56,7 +67,7 @@ class Effect {
 
     // particles
     this.particles = [];
-    this.gap = 5;
+    this.gap = 3;
     this.mouse = {
       radius: 2000,
       x: 0,
@@ -151,11 +162,11 @@ class Effect {
   }
 }
 
-function animate(){
+function animate() {
   effect.render();
   requestAnimationFrame(animate);
 }
 
 const effect = new Effect(ctx, canvas.width, canvas.height);
-effect.wrapText("HELLO MADAFAKER");
+effect.wrapText("CHORIZA LA QUE LEE");
 animate();
