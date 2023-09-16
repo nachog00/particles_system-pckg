@@ -64,12 +64,31 @@ class Effect {
         this.wrapText(e.target.value);
       }
     });
+    this.colors = [
+      {
+        input: document.getElementById("color1"),
+        value: "#ff0000",
+      },
+      {
+        input: document.getElementById("color2"),
+        value: "#00ff00",
+      }
+    ]
+
+    this.colors.forEach((color) => {
+      color.input.addEventListener("change", (e) => {
+        this.colors.forEach((color) => {
+          color.value = color.input.value;
+        });
+        this.wrapText(this.textInput.value);
+      });
+    });
 
     // particles
     this.particles = [];
     this.gap = 3;
     this.mouse = {
-      radius: 2000,
+      radius: 1000,
       x: 0,
       y: 0,
     };
@@ -87,8 +106,8 @@ class Effect {
       this.canvasWidth,
       this.canvasHeight
     );
-    gradient.addColorStop(0.4, "orangered");
-    gradient.addColorStop(1, "green");
+    gradient.addColorStop(0, this.colors[0].value);
+    gradient.addColorStop(1, this.colors[1].value);
     this.context.fillStyle = gradient;
     this.context.font = `${this.fontSize}px Arial`;
     this.context.textAlign = "center";
@@ -168,5 +187,5 @@ function animate() {
 }
 
 const effect = new Effect(ctx, canvas.width, canvas.height);
-effect.wrapText("CHORIZA LA QUE LEE");
+effect.wrapText("TRY ME OUT");
 animate();
