@@ -16,19 +16,38 @@
       href="https://fonts.googleapis.com/css2?family=Bangers&display=swap"
       rel="stylesheet"
     />
+
+    <!-- icons -->
+    <script
+      src="https://kit.fontawesome.com/5c00d89eed.js"
+      async
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
-    <div id="text-input-container">
+    <header>
+      <i class="fa-solid fa-circle-half-stroke" id="dark-theme-toggle"></i>
       <input type="text" id="text-input" placeholder="TRY ME OUT" />
       <div id="color-picker">
         <input type="color" id="color1" value="#EB3F00" />
         <input type="color" id="color2" value="#549315" />
       </div>
-    </div>
+    </header>
 
     <!--Create canvas-->
     <canvas class="font-bangers" id="canvas1"></canvas>
 
+    <footer>
+      <span
+        >with <i class="fa-solid fa-heart"></i> by
+        <a
+          href="https://github.com/nachog00"
+          target="_blank"
+          rel="noopener noreferrer"
+          >NachoGeo</a
+        ></span
+      >
+    </footer>
     <!--Link script-->
     <script defer src="testing/main.js"></script>
   </body>
